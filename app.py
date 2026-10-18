@@ -1,4 +1,4 @@
-"""Kohärenz: Was zwei Signale verbindet - bei kurzen Daten ist fast alles kohärent, und Eingangsrauschen kippt die Übertragungsfunktion - interaktive Konzept-Demo
+"""Kohärenz: Was zwei Signale verbindet - bei wenigen Segmenten ist die Kohärenz stark nach oben verzerrt, und Eingangsrauschen kippt die Übertragungsfunktion - interaktive Konzept-Demo
 Sebastian Hanisch - Operations Research und Machine Learning
 
 Stück 15 der Reihe „Spektral- und Wavelet-Analyse“. Kreuzspektrum und Kohärenz zweier Reihen nach Welch (Bias, Schwelle, Phase, Verzögerung, Übertragungsfunktion H1 und H2) und die Wavelet-Kohärenz für eine
@@ -140,7 +140,7 @@ a = _analysis(settings)
 st.markdown("## 🎯 Ergebnis")
 if welch:
     metrics = [("Mittlere Kohärenz", de(a.mean_coh, 2), f"wahr {de(a.mean_true, 2)}, erwartet {de(a.mean_expected, 2)}",
-                "Mittel über die Bins 3 bis seg/2 − 3; „erwartet“ ist der Mittelwert der Schätzung bei dieser Zahl unabhängiger Segmente (exakt, mit Bias)."),
+                "Mittel über die Bins 3 bis seg/2 − 3; „erwartet“ ist der Mittelwert der Schätzung bei dieser Zahl unabhängiger Segmente (numerisch aus der Dichte, mit Bias)."),
                ("Schwelle 95 %", de(a.thr, 2), f"{de(100 * a.share_above, 0)} % der Bins darüber", "Kohärenz, die bei wahrer Kohärenz 0 nur in 5 % der Fälle überschritten wird: 1 − 0,05^(1/(K − 1))."),
                ("Segmente K", f"{a.k_segments}", f"äquivalent {de(a.k_eff, 1)}", "Zahl der Segmente und die äquivalente Zahl unabhängiger Segmente bei Überlappung.")]
     metrics.append(("Phasenfehler", de(a.phase_rmse, 3) if a.phase_rmse is not None else "–", "rad, über der Schwelle", "Quadratischer Mittelwert der Phasenabweichung von der wahren Phase an den Bins über der Schwelle."))
@@ -160,7 +160,7 @@ if welch:
     st.plotly_chart(build_coherence(a), width="stretch", key="coherence")
     st.caption("Geschätzte Kohärenz (grün) gegen die wahre (rot gestrichelt) und die erwartete Schätzung mit Bias (orange gepunktet); waagerecht die 95-%-Schwelle: Darunter ist Kopplung nicht von null zu unterscheiden.")
     st.plotly_chart(build_phase(a), width="stretch", key="phase")
-    st.caption("Phase von S_xy gegen die wahre; unterhalb der Schwelle ist sie Zufall.")
+    st.caption("Phase von S_xy gegen die wahre; unterhalb der Schwelle ist sie bei Kopplung null reiner Zufall, sonst unsicher.")
     fig_h = build_transfer(a)
     if fig_h is not None:
         st.plotly_chart(fig_h, width="stretch", key="transfer")
@@ -193,7 +193,7 @@ st.caption("Feste Zufallsströme, unabhängig von den Reglern. Weißes Gauß-Rau
 st.markdown("#### Kohärenzbias und Schwelle")
 bias = _experiment("bias")
 st.caption(f"Segmentlänge {bias['seg']}, {bias['runs']} Läufe, Bins 2 bis {bias['seg'] // 2 - 2}, Segmente ohne Überlappung (unabhängig). Mittel der geschätzten Kohärenz bei wahrer Kohärenz 0 bis 0,9: Simulation, erste Ordnung "
-           "g² + (1 − g²)²/K und exakte Erwartung aus der Dichte.")
+           "g² + (1 − g²)²/K und numerisch berechnete Erwartung aus der Dichte.")
 st.dataframe(pd.DataFrame([{"K": k, **{f"wahr {g:g}".replace(".", ","): f"{de(r['sim'], 3)} / {de(r['first'], 3)} / {de(r['exact'], 3)}" for g in sorted({x['g2'] for x in bias['rows']})
                                        for r in [next(x for x in bias["rows"] if x["k"] == k and x["g2"] == g)]}} for k in sorted({x["k"] for x in bias["rows"]})]), hide_index=True, width="stretch")
 st.plotly_chart(build_bias(bias), width="stretch", key="exp_bias")

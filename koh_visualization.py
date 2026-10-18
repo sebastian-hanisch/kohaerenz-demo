@@ -114,7 +114,7 @@ def build_bias(res: dict) -> go.Figure:
         rows = [r for r in res["rows"] if r["g2"] == g2]
         fig.add_trace(go.Scatter(x=[r["k"] for r in rows], y=[r["sim"] for r in rows], mode="lines+markers", name=f"wahr {g2:g}".replace(".", ","), hovertemplate=f"wahr {g2:g}, K = %{{x}}: %{{y:.3f}}<extra></extra>"))
         fig.add_trace(go.Scatter(x=[r["k"] for r in rows], y=[r["exact"] for r in rows], mode="lines", line=dict(color="black", width=0.8, dash="dot"), showlegend=False, hoverinfo="skip"))
-    fig.update_xaxes(title_text="Zahl K der Segmente (log); gepunktet: exakte Erwartung", type="log")
+    fig.update_xaxes(title_text="Zahl K der Segmente (log); gepunktet: erwartete Schätzung aus der Dichte", type="log")
     fig.update_yaxes(title_text="mittlere geschätzte Kohärenz", range=[0, 1.02])
     return _fixed(fig, height=340)
 

@@ -117,7 +117,7 @@ def test_readme_transfer():
 
 def test_readme_delay_versus_window():
     d = {r["d"]: r for r in get("delay")["rows"]}
-    assert f"(d = 16: {de(d[16]['coh'], 3)}; d = 32: {de(d[32]['coh'], 3)}; d = 64: {de(d[64]['coh'], 3)})" in README and "Segmentlänge 128" in README
+    assert f"(gemessen d = 16: {de(d[16]['coh'], 3)}; d = 32: {de(d[32]['coh'], 3)}; d = 64: {de(d[64]['coh'], 3)};" in README and " / ".join(de(d[k]['rho2'], 3) for k in (16, 32, 64)) == "0,814 / 0,434 / 0,028" and "ρ(d)² selbst 0,814 / 0,434 / 0,028" in README and d[64]["coh"] > d[64]["rho2"] and "Segmentlänge 128" in README
     assert all(abs(r["aligned"] - 1.0) < 1e-9 for r in d.values()) and "Zurückschieben um d stellt 1,000 her" in README
     assert abs(d[16]["coh"] - d[16]["rho2"]) < 0.002 and abs(d[32]["coh"] - d[32]["rho2"]) < 0.01
 
@@ -133,8 +133,8 @@ def test_readme_wavelet():
     assert (f"liegt sie innen bei {de(c['inside'], 2)} und außen bei {de(c['outside'], 2)}, die Phase innen bei {de(c['phase'], 2)} rad (gesetzt {de(C.PHASE0, 2)}); Welch über die ganze Aufzeichnung sieht {de(w['welch']['coh'], 2)}") in README
     assert "(wahre Kohärenz 0,64)" in README and w["true_in"] == 0.64
     fr = [r["mean"] for r in w["freq"]]
-    assert f"({de(min(fr), 2)} bis {de(max(fr), 2)})" in README and "(0,33 bis 0,35)" in README
-    assert "0,29 bis 0,53 bei Kopplung null" in README and null[(2.0, 7)]["mean"] < 0.3 < 0.52 < null[(1.0, 1)]["mean"] < 0.54
+    assert f"({de(min(fr), 2)} bis {de(max(fr), 2)})" in README and "(0,33 bis 0,35)" in README and de(null[(1.0, 7)]["mean"], 2) == "0,45" and "Zeit 1, Skala 7) bei 0,45" in README
+    assert (de(min(r["k_eff"] for k, r in null.items() if k != (0.0, 1)), 1), de(max(r["k_eff"] for k, r in null.items() if k != (0.0, 1)), 1)) == ("1,4", "3,5") and "nur 1,4 bis 3,5 äquivalente Segmente" in README and (de(min(r["mean"] for k, r in null.items() if k != (0.0, 1)), 2), de(max(r["mean"] for k, r in null.items() if k != (0.0, 1)), 2)) == ("0,29", "0,73") and "Bias 0,29 bis 0,73 bei Kopplung null" in README
 
 
 # --- README: Methodik, Modell, Grenzen ---------------------------------------------------------------------------------------------------------
