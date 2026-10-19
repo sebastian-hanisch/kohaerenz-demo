@@ -1,7 +1,6 @@
 # Kohärenz: Was zwei Signale verbindet – bei wenigen Segmenten ist die Kohärenz stark nach oben verzerrt, und Eingangsrauschen kippt die Übertragungsfunktion – Streamlit-Demo
 
-<!-- TODO nach dem Deploy: direkt hierher den Live-Link setzen (Leerzeile davor und danach):
-**[→ Demo live ausprobieren](https://sebastianhanisch-kohaerenz-demo.streamlit.app/)** -->
+**[→ Demo live ausprobieren](https://sebastianhanisch-kohaerenz-demo.streamlit.app/)**
 
 Fünfzehnte Demo der Reihe **Spektral- und Wavelet-Analyse** in der „Konzepte“-Reihe für die Website „Sebastian Hanisch – Operations Research und Machine Learning“, aufbauend auf den Demos zum **Welch-Verfahren** und zum
 **Skalogramm**. Aus zwei Reihen werden Kreuzspektrum, **Kohärenz**, Phase, **Verzögerung** und die Übertragungsfunktionen **H1** und **H2** geschätzt; die **Wavelet-Kohärenz** findet eine zeitweilige Kopplung. Gemessen
@@ -108,4 +107,4 @@ Gebaut mit Streamlit, Plotly und NumPy.
 
 ---
 
-Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zu den Demos: [Interaktive Demos](https://sebastianhanisch.net/demos.html).
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Spektren und Wavelets: von Fourier zum Vergleich](https://sebastianhanisch.net/konzepte-spektral-wavelet-analyse.html).
